@@ -1,0 +1,81 @@
+﻿@model IEnumerable<NNice.Web.Models.BookingServiceViewModel>
+
+@{
+    ViewData["Title"] = "Booking Service";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Booking Room</h1>
+
+<p>
+    <a class = "btn btn-success mt-1 btn-xl"  asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RoomName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookingParty)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PartyName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalAmount )
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            @foreach (var item in Model)
+            {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoomName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndTime)
+            </td>
+            <td>
+                @(item.BookingParty ? "Yes" : "No")
+            </td>
+            <td>
+                @(item.BookingParty ? item.PartyName : "N/A")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalAmount)
+            </td>
+            <td>
+                @Html.ActionLink(" Issue invoice", "Edit", new { /* id=item.PrimaryKey */ }, new { @class = "btn btn-primary" }) |
+                @Html.ActionLink("Details", "Details", new { item.ID }, new { @class = "btn btn-primary" })
+            </td>
+        </tr>
+            }
+        }
+    </tbody>
+</table>

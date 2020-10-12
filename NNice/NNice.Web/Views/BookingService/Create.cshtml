@@ -1,0 +1,102 @@
+﻿@model NNice.Web.Models.BookingServiceViewModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Booking</h1>
+
+<h4>Service Karaoke NNice</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="RoomName" class="control-label"></label>
+                @Html.DropDownListFor(x => x.RoomID, Model.RoomItems, new { @class="custom-select"})
+            </div>
+            <div class="form-group">
+                <label asp-for="StartTime" class="control-label"></label>
+                <input asp-for="StartTime" value="@DateTime.Now" class="form-control" />
+                <span asp-validation-for="StartTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EndTime" class="control-label"></label>
+                <input asp-for="EndTime" class="form-control" />
+                <span asp-validation-for="EndTime" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input id="bookingParty" class="form-check-input" asp-for="BookingParty" /> @Html.DisplayNameFor(model => model.BookingParty)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="PartyName" class="control-label"></label>
+                <input id="partyName" asp-for="PartyName" class="form-control" readonly />
+                <span asp-validation-for="PartyName" class="text-danger"></span>
+            </div>
+            @await Html.PartialAsync("/Views/BookingService/_PartialProduct.cshtml", Model.ShoppingCarts)
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        
+        $('#bookingParty').click(function () {
+
+            if ($('#bookingParty').is(':checked')) {
+                disablePartyName(true);
+            }
+            else {
+                disablePartyName(false);
+            }
+        });
+        addToCart();
+    });
+
+    function addToCart() {
+        debugger;
+        $(".btn_addToCart").click(function () {
+            var cartId = $(this).attr("data-id");
+            var countId = "#count_" + cartId;
+            var count = $(countId).val();
+            var productId = $(this).attr("data-productId");
+            $.post("/BookingService/AddProductPartial", { "cartId": cartId, "count": count, "ProductID": productId}
+                , function (data) {
+
+                }
+            )
+        });
+    }
+
+    function disablePartyName(bookingParty) {
+        if (bookingParty == false) {
+            $("#partyName").attr('readonly', true);
+
+            //$("input").prop('disabled', true);
+        }
+        else {
+            $("#partyName").attr('readonly', false);
+
+        }
+    }
+</script>
+
+}
+

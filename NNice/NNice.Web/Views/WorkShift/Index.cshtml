@@ -1,0 +1,90 @@
+﻿@model NNice.Web.Models.WorkShiftViewModel
+
+@{
+    ViewData["Title"] = "Work Shifts Management";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<header>
+    <div class="row">
+        <div class="col-md-4">
+            <a href="@Url.Action("Create","WorkShift")" class="btn btn-info" name="btnAdd" role="button">New WorkShift</a>
+            <input type="hidden" id="custId" name="custId" value="@ViewBag.message">
+        </div>
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            @using (Html.BeginForm("Index", "WorkShift", FormMethod.Get))
+            {
+                <form class="mb-3">
+                    <div class="input-group mt-1 mt-md-0">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="from-date">From</span>
+                        </div>
+                        <input type="date"
+                               name="from"
+                               class="form-control"
+                               aria-label="from"
+                               value="@Model.dates[0].ToString("yyyy-MM-dd")"
+                               aria-describedby="from-date">
+                        <input type="submit" value="Change" class="btn btn-secondary" />
+                    </div>
+                </form>
+
+            }
+        </div>
+    </div>
+</header>
+<div class="row">
+    <div class="col-md-12 ">
+        <div class="card">
+            <div class="card-header">
+                <h4>Work Shift Calendar</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Shift</th>
+                                @foreach (var x in Model.dates)
+                                {
+                                    <th>@x.ToString("MMMM dd")</th>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 1; i < 5; i++)
+                            {
+                                <tr>
+                                    <th>@i</th>
+                                    @for (int j = 0; j < 7; j++)
+                                    {
+                                        <th>
+                                            @if (Model.workShifts != null)
+                                            {
+                                                @foreach (var x in Model.workShifts)
+                                                {
+                                                    if (x.ShiftNumber == i && x.WorkDate.Date == Model.dates[j].Date)
+                                                    {
+                                                        @foreach (var em in x.Employees)
+                                                        {
+                                                            <a href="@Url.Action("Update", "WorkShift", new { x.ID })" class="badge badge-primary">@em.FirstName @em.LastName</a><br />
+                                                        }
+
+
+                                                    }
+                                                }
+                                            }
+
+                                        </th>
+
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

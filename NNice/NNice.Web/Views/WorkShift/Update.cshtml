@@ -1,0 +1,74 @@
+﻿@model NNice.Web.Models.WorkShiftDetailModel
+
+@{
+    ViewData["Title"] = "Update a work shift";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <header>
+            <h3>Update a work shift</h3>
+        </header>
+        <hr />
+        @using (Html.BeginForm("Update", "WorkShift", FormMethod.Post))
+        {
+            <form asp-action="AddWorkShift">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="WorkDate" class="control-label"></label>
+                    <input asp-for="WorkDate" type="date" class="form-control"/>
+                    <span asp-validation-for="WorkDate" class="text-danger"></span>
+                </div>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Employees" class="control-label"></label>
+                    <select asp-for="Employees" class="form-control" multiple="multiple"
+                            asp-items="@(new SelectList(ViewBag.AllEmployees,"ID","LastName"))">
+                        <option>Please select one</option>
+                    </select>
+                    <span asp-validation-for="Employees" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ShiftNumber" class="control-label"></label>
+                    <input asp-for="ShiftNumber" class="form-control" />
+                    <span asp-validation-for="ShiftNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                    <a asp-action="Index" class="btn btn-info" name="btnAdd" role="button">Cancel</a>
+                    <button type="button" class="btn btn-danger ml-auto" data-toggle="modal" data-target="#model" data-whatever="@Model.ID">
+                        Delete
+                    </button>
+                    <div class="modal fade xoa-modal" id="model" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Confirm</h5>
+                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    You really want to delete this work shift?
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-sm btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                    <a href="@Url.Action("Delete", "WorkShift", new { id = Model.ID })" class="btn btn-sm btn-danger">
+                                        Delete
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        }
+    </div>
+
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

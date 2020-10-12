@@ -1,0 +1,50 @@
+﻿@model NNice.Web.Models.WorkShiftDetailModel
+
+@{
+    ViewData["Title"] = "Add new work shift";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <header>
+            <h3>Add new work shift</h3>
+        </header>
+        <hr />
+        @using (Html.BeginForm("Create", "WorkShift", FormMethod.Post))
+        {
+            <form asp-action="AddWorkShift">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="WorkDate" class="control-label"></label>
+                    <input asp-for="WorkDate" class="form-control" type="date"/>
+                    <span asp-validation-for="WorkDate" class="text-danger"></span>
+                </div>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Employees" class="control-label"></label>
+                    <select asp-for="Employees" class="form-control" multiple="multiple"
+                            asp-items="@(new SelectList(ViewBag.AllEmployees,"ID","LastName"))">
+                        <--option-->Please select one</--option-->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ShiftNumber" class="control-label"></label>
+                    <input asp-for="ShiftNumber" class="form-control" />
+                    <span asp-validation-for="ShiftNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                    <a asp-action="Index" class="btn btn-info" name="btnAdd" role="button">Cancel</a>
+                </div>
+            </form>
+        }
+    </div>
+
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

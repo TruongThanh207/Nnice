@@ -1,0 +1,37 @@
+﻿@model ProductViewModel
+@{
+    ViewData["Title"] = "ProductDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <header>
+            <h3>Add Product</h3>
+            <input type="hidden" id="custId" name="custId" value="@ViewBag.message">
+        </header>
+        @using (Html.BeginForm("ProductDetail", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label for="code">Name</label>
+                @Html.TextBoxFor(m => m.Name, "", new { @class = "form-control" })
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UnitPrice" class="control-label">Price</label>
+                <input asp-for="UnitPrice" min="1" class="form-control" />
+                <span asp-validation-for="UnitPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group" style="margin-top:30px">
+                <input type="submit" value="Save" class="btn btn-primary" />
+                @Html.ActionLink("Back", "Product", "Product", null, new { @class = "btn btn-default" })
+                <input type="hidden" asp-for="ID" />
+            </div>
+        }
+    </div>
+</div>
+

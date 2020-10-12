@@ -1,0 +1,42 @@
+﻿@model IEnumerable<NNice.Web.Models.ShoppingCartViewModel>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UnitPrice)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UnitPrice)
+            </td>
+            <td>
+                @*@Html.ActionLink("Add to cart", "AddProductPartial", "BookingService", new { model = item}, new{@class ="btn btn-primary"})*@
+                <input type="button" class="btn btn-primary btn_addToCart" value="Add to cart" id="" data-id="@item.CartId" data-productId="@item.ProductID" /> |                  
+                @*<input type="submit" class="btn btn-primary" value="Remove from cart" id="btn_removeFromCart" />*@
+                <input id="count_@item.CartId" asp-for="@item.Count" type="number" class="" min="0" max="10">
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

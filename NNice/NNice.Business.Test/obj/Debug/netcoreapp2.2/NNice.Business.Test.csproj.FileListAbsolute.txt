@@ -1,0 +1,4 @@
+C:\Users\NT_Thanh\Downloads\nnice-develop\NNice\NNice.Business.Test\obj\Debug\netcoreapp2.2\NNice.Business.Test.csprojAssemblyReference.cache
+C:\Users\NT_Thanh\Downloads\nnice-develop\NNice\NNice.Business.Test\obj\Debug\netcoreapp2.2\NNice.Business.Test.csproj.CoreCompileInputs.cache
+C:\Users\NT_Thanh\Downloads\nnice-develop\NNice\NNice.Business.Test\obj\Debug\netcoreapp2.2\NNice.Business.Test.AssemblyInfoInputs.cache
+C:\Users\NT_Thanh\Downloads\nnice-develop\NNice\NNice.Business.Test\obj\Debug\netcoreapp2.2\NNice.Business.Test.AssemblyInfo.cs

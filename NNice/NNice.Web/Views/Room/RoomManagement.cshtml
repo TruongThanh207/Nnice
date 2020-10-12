@@ -1,0 +1,97 @@
+﻿@model IList<NNice.Web.Models.RoomViewModel>
+@{
+    ViewData["Title"] = "RoomManager";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<header>
+    <div class="row">
+        <div class="col-md-6">
+            <a href="@Url.Action("RoomDetail","Room")" class="btn btn-info" name="btnAdd" role="button">New Room</a>
+            <input type="hidden" id="custId" name="custId" value="@ViewBag.message">
+        </div>
+        <div class="col-md-6">
+            @using (Html.BeginForm())
+                {
+            <div class="input-group md-form form-sm form-2 pl-0">
+                @Html.TextBox("Search", "", new { @class = "form-control my-0 py-1", @style= "border: 1px solid #ef9a9a;", @placeholder="Search" })
+                <div class="input-group-append">
+                    <button id="button-addon1" type="submit" class="btn btn-primary"><i class="icon icon-search"></i></button>
+                </div>
+            </div>
+                }
+        </div>
+    </div>
+</header>
+<div class="row">
+    <div class="col-md-12 ">
+        <div class="card">
+            <div class="card-header">
+                <h4>ROOM</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Capacity</th>
+                                <th>Status</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if(Model != null)
+                            {
+                            @foreach (NNice.Web.Models.RoomViewModel m in Model)
+                            {
+                                var myModal = "myModal" + m.ID;
+                            <tr>
+                                @*<td>@m.Code</td>*@
+                                <td>@m.Name</td>
+                                <td>@m.Capacity</td>
+                                <td>@m.IsAvailable</td>
+                                <td>
+                                    <a href="@Url.Action("RoomDetail", "Room", new { m.ID })" class="btn btn-sm btn-success" name="btnAdd" role="button">Edit</a>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#@myModal" data-whatever="@m.ID">
+                                        Delete
+                                    </button>
+                                    <div class="modal fade xoa-modal" id="@myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">×</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">Are you sure to delete this room?</div>
+                                                <div class="modal-footer">
+                                                    <button class="btn btn-sm btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                                    <button type="button" class="btn btn-sm btn-danger">
+                                                        @Html.ActionLink("Delete","DeleteRoom", "Room", new { id = m.ID })
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+

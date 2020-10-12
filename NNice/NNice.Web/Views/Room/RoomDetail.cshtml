@@ -1,0 +1,50 @@
+﻿@model NNice.Web.Models.RoomViewModel
+@{
+    ViewData["Title"] = "AddRoom";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <header>
+            <h3>Add Room</h3>
+        </header>
+        <hr />
+        @using (Html.BeginForm("RoomDetail", "Room", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label for="code">Name</label>
+                @Html.TextBoxFor(m => m.Name, "", new { @class = "form-control" })
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Capacity" class="control-label">Capacity</label>
+                <input asp-for="Capacity" min="1" class="form-control" />
+                <span asp-validation-for="Capacity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IsAvailable" class="control-label">Status</label>
+                <select asp-for="IsAvailable" id="status" class="form-control" style="width: 13rem; float: right" name="isavailable">
+                    <option selected value="true">Active</option>
+                    <option value="false">Inactive</option>
+                </select>
+            </div>
+            <div class="form-group" style="margin-top:30px">
+                <input type="submit" value="Save" class="btn btn-primary" />
+                @Html.ActionLink("Back", "RoomManagement", "Room", null, new { @class = "btn-lg btn-default btnCancel" })
+                <input type="hidden" asp-for="ID" />
+            </div>
+        }
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+

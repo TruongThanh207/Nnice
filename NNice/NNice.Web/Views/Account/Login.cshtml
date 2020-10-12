@@ -1,0 +1,63 @@
+﻿@model AccountViewModel
+@{
+    Layout = null;
+    ViewData["Title"] = "Login Page";
+}
+
+
+<!------ Include the above in your HEAD tag ---------->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Page</title>
+    <link rel="stylesheet" type="text/css" href="~/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="d-flex justify-content-center h-100">
+            <div class="card">
+                <div class="card-header">
+                    <h4>NNice Karaoke Management</h4>
+                    <h4>Login</h4>
+                </div>
+                <div class="card-body">
+                    @using (Html.BeginForm("Account", "Login", FormMethod.Post))
+                    {
+                        <input type="hidden" asp-for="ReturnUrl" />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        @Html.AntiForgeryToken()
+                        <div class="form-group">
+                            <label for="username">Username</label><br>
+                            @Html.TextBoxFor(m => m.Username, "", new { @class = "form-control", @placeholder = "Username" })
+                            @Html.ValidationMessageFor(u => u.Username, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label><br>
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
+                            @Html.ValidationMessageFor(u => u.Password, "", new { @class = "text-danger" })
+                        </div>
+                        if (@ViewBag.Error != null)
+                        {
+                            <p style="color:red; text-align:center;">@ViewBag.Error</p>
+                        }
+                        <div class="row align-items-center remember">
+                            @*<input type="checkbox" id="remember" name="remember">*@Remember Me
+                            @Html.CheckBoxFor(m => m.RememberMe)
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Sign In" name="login" class="btn float-right login_btn">
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</body>
+</html>
+
+

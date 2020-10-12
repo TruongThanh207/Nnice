@@ -1,0 +1,86 @@
+﻿@model IList<ProductViewModel>
+@{
+    ViewData["Title"] = "Product";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<header>
+    <div class="row">
+        <div class="col-md-6">
+            <a href="@Url.Action("ProductDetail","Product")" class="btn btn-info" name="btnAdd" role="button">New Product</a>
+            <input type="hidden" id="custId" name="custId" value="@ViewBag.message">
+        </div>
+        <div class="col-md-6">
+            @using (Html.BeginForm())
+            {
+                <div class="input-group md-form form-sm form-2 pl-0">
+                    @Html.TextBox("Search", "", new { @class = "form-control my-0 py-1", @style = "border: 1px solid #ef9a9a;", @placeholder = "Search" })
+                    <div class="input-group-append">
+                        <button id="button-addon1" type="submit" class="btn btn-primary"><i class="icon icon-search"></i></button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</header>
+<div class="row">
+    <div class="col-md-12 ">
+        <div class="card">
+            <div class="card-header">
+                <h4>PRODUCT</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (ProductViewModel x in Model)
+                            {
+                                var myModal = "myModal" + x.ID;
+                                <tr>
+                                    <td>@x.Name</td>
+                                    <td>@x.UnitPrice</td>
+                                    <td>
+                                        <a href="@Url.Action("ProductDetail", "Product", new { id = x.ID })" class="btn btn-sm btn-success" name="btnAdd" role="button">Edit</a>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#@myModal" data-whatever="@x.ID">
+                                            Delete
+                                        </button>
+                                        <div class="modal fade xoa-modal" id="@myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Confirm</h5>
+                                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">×</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">Do you really want to delete?</div>
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-sm btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                                        <button type="button" class="btn btn-sm btn-danger">
+                                                            @Html.ActionLink("Delete", "DeleteProduct", "Product", new { id = x.ID })
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

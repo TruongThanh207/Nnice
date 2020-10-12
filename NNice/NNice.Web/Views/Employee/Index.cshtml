@@ -1,0 +1,99 @@
+﻿@model IList<NNice.Web.Models.EmployeeViewModel>
+@{
+    ViewData["Title"] = "Employee Manager";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<header>
+    <div class="row">
+        <div class="col-md-6">
+            <a href="@Url.Action("Create","Employee")" class="btn btn-info" name="btnAdd" role="button">New Employee</a>
+            <input type="hidden" id="custId" name="custId" value="@ViewBag.message">
+        </div>
+        <div class="col-md-6">
+            @using (Html.BeginForm())
+            {
+                <div class="input-group md-form form-sm form-2 pl-0">
+                    @Html.TextBox("Search", "", new { @class = "form-control my-0 py-1", @placeholder = "Search" })
+                    <div class="input-group-append">
+                        <button id="button-addon1" type="submit" class="btn btn-primary"><i class="icon icon-search"></i></button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</header>
+<div class="row">
+    <div class="col-md-12 ">
+        <div class="card">
+            <div class="card-header">
+                <h4>Employees List</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Full Name</th>
+                                <th>Email</th>
+                                <th>Address</th>
+                                <th>Salary</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null)
+                            {
+                                @foreach (NNice.Web.Models.EmployeeViewModel m in Model)
+                                {
+                                    var myModal = "myModal" + m.ID;
+                                    <tr>
+                                        <th>@m.ID</th>
+                                        <th>@m.FirstName @m.LastName</th>
+                                        <th>@m.Email</th>
+                                        <th>@m.Address</th>
+                                        <th>@m.Salary</th>
+                                        <td>
+                                            <a href="@Url.Action("Update", "Employee", new { m.ID })" class="btn btn-sm btn-success ml-auto" name="btnAdd" role="button">Edit</a>
+                                            <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#@myModal" data-whatever="@m.ID">
+                                                Delete
+                                            </button>
+                                            <div class="modal fade xoa-modal" id="@myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Confirm</h5>
+                                                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">×</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            You really want to delete this employee?
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button class="btn btn-sm btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                                            <button type="button" class="btn btn-sm btn-danger">
+                                                                @Html.ActionLink("Delete", "Delete", "Employee", new { id = m.ID })
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
